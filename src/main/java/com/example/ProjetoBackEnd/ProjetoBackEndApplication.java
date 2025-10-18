@@ -11,3 +11,6 @@ public class ProjetoBackEndApplication {
 	}
 
 }
+
+//mvn spring-boot:run pra iniciar o projeto
+//http://localhost:8080

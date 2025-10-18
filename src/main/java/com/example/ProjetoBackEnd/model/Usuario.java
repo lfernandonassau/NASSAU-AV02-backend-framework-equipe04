@@ -19,3 +19,4 @@ public class Usuario{
     private String senha;
     private boolean ativo;
 }
+
