@@ -24,4 +24,4 @@ public class SecurityConfig {
      * .requestMatchers("/public/**").permitAll().anyRequest().authenticated()
      */
     
-}
+} 

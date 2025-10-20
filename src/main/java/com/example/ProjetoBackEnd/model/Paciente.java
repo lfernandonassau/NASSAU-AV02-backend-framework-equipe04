@@ -23,3 +23,5 @@ public class Paciente {
     @JoinColumn(name = "id")
     private Usuario usuario;
 }
+
+// fazer o crud: Celso

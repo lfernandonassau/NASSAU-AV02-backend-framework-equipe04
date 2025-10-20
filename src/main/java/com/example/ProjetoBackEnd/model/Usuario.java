@@ -20,3 +20,4 @@ public class Usuario{
     private boolean ativo;
 }
 
+// fazer o crud: Celso

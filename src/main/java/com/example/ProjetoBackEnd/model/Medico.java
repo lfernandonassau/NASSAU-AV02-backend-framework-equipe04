@@ -24,3 +24,5 @@ public class Medico {
     @OneToMany(mappedBy = "medico")
     private List<Agendamento> agendamentos;
 }
+
+// fazer o crud: Jão
