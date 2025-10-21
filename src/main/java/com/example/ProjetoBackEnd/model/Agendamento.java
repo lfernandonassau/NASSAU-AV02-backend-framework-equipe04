@@ -18,7 +18,9 @@ public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_Agendamento;
-    private LocalDateTime data_hora_Agendamento;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
+
     private String tipo_Agendamento; //consulta / exame(de prostata, sangue etc)
     private String status_Agendamento; //confirmado / cancelado
 
