@@ -1,6 +1,5 @@
 package com.example.ProjetoBackEnd.model;
 
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -17,26 +16,22 @@ public class Agendamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Agendamento;
+    private Long id; 
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
 
-    private String tipo_Agendamento; //consulta / exame(de prostata, sangue etc)
-    private Boolean statusAgendamento; //confirmado / cancelado
+    private String tipoAgendamento;
+    private Boolean statusAgendamento;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "usuario_id") 
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_Medico")
+    @JoinColumn(name = "medico_id") 
     private Medico medico;
 
     @ManyToOne
-    @JoinColumn(name = "id_Paciente")
+    @JoinColumn(name = "paciente_id") 
     private Paciente paciente;
-
-    
 }
-
-// fazer o crud: Celso

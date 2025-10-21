@@ -1,7 +1,6 @@
 package com.example.ProjetoBackEnd.model;
 
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +16,5 @@ public class Usuario{
     private String nome;
     private String email;
     private String senha;
-    private boolean ativo;
+    private boolean ativo = true; // Adicionado o valor default
 }
-
-// fazer o crud: Celso

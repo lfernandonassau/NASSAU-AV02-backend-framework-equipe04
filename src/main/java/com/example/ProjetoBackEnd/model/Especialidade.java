@@ -1,6 +1,5 @@
 package com.example.ProjetoBackEnd.model;
 
-
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -17,14 +16,10 @@ import jakarta.persistence.Id;
 public class Especialidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_especialidade;
-    private String nome_especialidade;
-    private String descricao_especialidade;
+    private Long id; 
+    private String nome; 
+    private String descricao; 
 
     @OneToMany(mappedBy = "especialidade")
     private List<Medico> medicos;
-    
-    
 }
-
-// fazer o crud: jão

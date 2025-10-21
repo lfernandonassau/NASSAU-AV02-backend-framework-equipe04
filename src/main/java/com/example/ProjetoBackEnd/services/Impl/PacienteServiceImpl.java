@@ -17,7 +17,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public Paciente buscarPacientePorNome(String nome) {
 
-        return pacienteRepository.buscaPorNome(nome);
+        return pacienteRepository.findByNome(nome);
 
     }
 
@@ -32,10 +32,10 @@ public class PacienteServiceImpl implements PacienteService {
 
 
 
-        paciente.setEmail_Paciente(paciente.getEmail_Paciente());
-        paciente.setNome_Paciente(paciente.getNome_Paciente());
-        paciente.setEndereco_Paciente(paciente.getEndereco_Paciente());
-        paciente.setTelefone_Paciente(paciente.getTelefone_Paciente());
+        paciente.setEmail(paciente.getEmail());
+        paciente.setNome(paciente.getNome());
+        paciente.setEndereco(paciente.getEndereco());
+        paciente.setTelefone(paciente.getTelefone());
 
 
         return pacienteRepository.save(paciente);

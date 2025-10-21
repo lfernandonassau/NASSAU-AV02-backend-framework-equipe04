@@ -9,19 +9,16 @@ public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Paciente;
-    private String nome_Paciente;
-    private String cpf_Paciente;
-    private String telefone_Paciente;
-    private String endereco_Paciente;
-    private String email_Paciente;
-    private String data_Nascimento_Paciente;
-    private boolean ativo_Paciente;
+    private Long id; // Simplificado
+    private String nome; // Simplificado
+    private String cpf; // Simplificado
+    private String telefone; // Simplificado
+    private String endereco; // Simplificado
+    private String email; // Simplificado
+    private String dataNascimento; // Corrigido para CamelCase
+    private boolean ativo = true; // Simplificado e com valor default
 
-    //só pra saber quem cadastrou o paciente
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "usuario_id") // Ajustado para evitar conflito com o 'id' do Paciente
     private Usuario usuario;
 }
-
-// fazer o crud: Celso

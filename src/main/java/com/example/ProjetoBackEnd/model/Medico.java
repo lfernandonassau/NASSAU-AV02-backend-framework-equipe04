@@ -15,7 +15,7 @@ public class Medico {
     private String nome;
     private String crm;
     private String telefone;
-    private boolean ativo;
+    private boolean ativo = true; 
 
     @ManyToOne
     @JoinColumn(name = "especialidade_id")
@@ -24,5 +24,3 @@ public class Medico {
     @OneToMany(mappedBy = "medico")
     private List<Agendamento> agendamentos;
 }
-
-// fazer o crud: Jão
