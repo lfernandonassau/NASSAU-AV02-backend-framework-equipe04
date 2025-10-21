@@ -1,7 +1,8 @@
 package com.example.ProjetoBackEnd.controller;
 
+import com.example.ProjetoBackEnd.repository.PacienteRepository;
+import com.example.ProjetoBackEnd.services.UsuarioService;
 import org.springframework.web.bind.annotation.*; // o * importa todas as classes do pacote, bom saber
-import java.util.List;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 
@@ -10,21 +11,35 @@ import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController{
+    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
-    private final UsuarioRepository repository;
-    public UsuarioController(UsuarioRepository repository){
-        this.repository = repository;
+    public UsuarioController(UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
+        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
     }
 
-    @GetMapping
-    public List<Usuario> listarUsuarios(){
-        return repository.findAll();
-    }
-    @PostMapping
+    @PostMapping("/salvarusuario")
     public Usuario salvarUsuario(@RequestBody Usuario usuario){
-        return repository.save(usuario);
-
-
+        return usuarioService.salvarUsuario(usuario);
     }
+
+    @PutMapping("/atualizaruser")
+    public Usuario atualizarUsuario(@RequestBody Usuario usuario){
+        return usuarioService.atualizarUsuario(usuario);
+    }
+
+    @GetMapping("/buscar/{id}")
+    public Usuario buscarUsuarioPorId(@PathVariable Long id){
+        return usuarioService.buscarUsuarioPorId(id);
+    }
+
+
+
+
+
+
+
+
 
 }

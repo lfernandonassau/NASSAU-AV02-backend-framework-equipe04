@@ -10,10 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
-    public List<Agendamento> findByUsuario(Usuario usuario);
-    public List<Agendamento> findByMedico(Medico medico);
-    public List<Agendamento> findByStatus(Boolean status);
-    public List<Agendamento>  findByPaciente(Paciente paciente);
-    public List<Agendamento> verificarHorario(LocalDateTime dataInicio, LocalDateTime dataFim);
-    public List<Agendamento> verificaHorarioPorMedico(LocalDateTime dataInicio, LocalDateTime dataFim, Medico medico);
+    List<Agendamento> findByUsuario(Usuario usuario);
+    List<Agendamento> findByMedico(Medico medico);
+    List<Agendamento> findByStatusAgendamento(Boolean statusAgendamento);
+    List<Agendamento> findByPaciente(Paciente paciente);
+
+
+    List<Agendamento> findByDataInicioAndDataFim(LocalDateTime dataInicio, LocalDateTime dataFim);
 }

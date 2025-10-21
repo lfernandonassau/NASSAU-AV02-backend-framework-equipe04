@@ -7,13 +7,15 @@ import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.AgendamentoRepository;
 import com.example.ProjetoBackEnd.services.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-public class AgendamentoServiceImpl  implements AgendamentoService {
+@Service
+public  class AgendamentoServiceImpl  implements AgendamentoService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+
     @Override
     public Agendamento salvar(Agendamento agendamento) {
         return agendamentoRepository.save(agendamento);
@@ -41,13 +43,13 @@ public class AgendamentoServiceImpl  implements AgendamentoService {
 
     @Override
     public List<Agendamento> buscarPorStatus(Boolean status) {
-        return agendamentoRepository.findByStatus(status);
+        return agendamentoRepository.findByStatusAgendamento(status);
     }
 
 
     @Override
     public Agendamento atualizar(Agendamento agendamento) {
-        agendamento.setStatus_Agendamento(agendamento.getStatus_Agendamento());
+        agendamento.setStatusAgendamento(agendamento.getStatusAgendamento());
         agendamento.setMedico(agendamento.getMedico());
         agendamento.setPaciente(agendamento.getPaciente());
         agendamento.setUsuario(agendamento.getUsuario());
@@ -58,13 +60,14 @@ public class AgendamentoServiceImpl  implements AgendamentoService {
     }
 
     @Override
-    public Agendamento atualizarStatus(boolean novoStatus) {
-        return  agendamentoRepository.save(atualizarStatus(novoStatus));
+    public void remover(Integer Id) {
+        agendamentoRepository.deleteById(Id);
     }
 
-    @Override
-    public void remover(Agendamento agendamento) {
-        agendamentoRepository.delete(agendamento);
+    public List<Agendamento> verificarHorario(LocalDateTime dataInicio, LocalDateTime dataFim) {
+
+        return agendamentoRepository.findByDataInicioAndDataFim(dataInicio, dataFim);
+
 
     }
 }

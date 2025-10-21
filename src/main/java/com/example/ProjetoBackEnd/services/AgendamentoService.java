@@ -16,9 +16,8 @@ public interface AgendamentoService {
     public List<Agendamento> buscarPorUser (Usuario usuario);
     public List<Agendamento> buscarPorStatus(Boolean status);
     public Agendamento atualizar(Agendamento agendamento);
-    public Agendamento atualizarStatus(boolean novoStatus);
-    public void remover(Agendamento agendamento);
-
+    List<Agendamento> verificarHorario(LocalDateTime dataInicio, LocalDateTime dataFim);
+    public void remover(Integer id);
 
 
 }

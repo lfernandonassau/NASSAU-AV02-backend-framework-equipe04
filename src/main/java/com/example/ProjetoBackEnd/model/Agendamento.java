@@ -22,7 +22,7 @@ public class Agendamento {
     private LocalDateTime dataFim;
 
     private String tipo_Agendamento; //consulta / exame(de prostata, sangue etc)
-    private String status_Agendamento; //confirmado / cancelado
+    private Boolean statusAgendamento; //confirmado / cancelado
 
     @ManyToOne
     @JoinColumn(name = "id")
