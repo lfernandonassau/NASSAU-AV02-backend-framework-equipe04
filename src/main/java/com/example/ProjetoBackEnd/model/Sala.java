@@ -1,7 +1,5 @@
 package com.example.ProjetoBackEnd.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,21 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Agendamento {
-
+public class Sala {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-    private LocalDateTime dataInicio;
-    private LocalDateTime dataFim;
-
-    private String tipoAgendamento; // exame/consulta
-    private Boolean statusAgendamento;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id") 
-    private Usuario usuario;
-
+    private long id;
+    private String nome;
     @ManyToOne
     @JoinColumn(name = "medico_id") 
     private Medico medico;
@@ -34,4 +22,6 @@ public class Agendamento {
     @ManyToOne
     @JoinColumn(name = "paciente_id") 
     private Paciente paciente;
+
+    
 }

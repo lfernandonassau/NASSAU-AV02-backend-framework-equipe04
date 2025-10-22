@@ -3,6 +3,7 @@ package com.example.ProjetoBackEnd.services;
 import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
 
+
 public interface PacienteService {
 
     public Paciente buscarPacientePorNome(String nome);
