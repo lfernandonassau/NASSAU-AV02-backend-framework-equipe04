@@ -29,7 +29,8 @@ public class PacienteController {
 
     @PutMapping("/atualizarcadastropaciente")
     public Paciente atualizarPaciente(@RequestBody Paciente paciente) {
-        return pacienteService.atualizarPaciente(paciente);
+
+        return pacienteService.atualizarPaciente(paciente.getId(), paciente);
     }
 
     @DeleteMapping("/deletarpaciente/{id}")

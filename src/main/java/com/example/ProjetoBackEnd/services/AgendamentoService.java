@@ -15,7 +15,7 @@ public interface AgendamentoService {
     public List<Agendamento> buscarPorMedico(Medico medico);
     public List<Agendamento> buscarPorUser (Usuario usuario);
     public List<Agendamento> buscarPorStatus(Boolean status);
-    public Agendamento atualizar(Agendamento agendamento);
+    public Agendamento atualizar(int id, Agendamento agendamento);
     List<Agendamento> verificarHorario(LocalDateTime dataInicio, LocalDateTime dataFim);
     public void remover(Integer id);
 

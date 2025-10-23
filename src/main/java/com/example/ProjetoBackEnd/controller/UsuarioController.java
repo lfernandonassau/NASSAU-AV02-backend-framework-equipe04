@@ -26,7 +26,7 @@ public class UsuarioController{
 
     @PutMapping("/atualizaruser")
     public Usuario atualizarUsuario(@RequestBody Usuario usuario){
-        return usuarioService.atualizarUsuario(usuario);
+        return usuarioService.atualizarUsuario(usuario.getId(), usuario);
     }
 
     @GetMapping("/buscar/{id}")

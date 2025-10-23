@@ -27,20 +27,21 @@ public class PacienteServiceImpl implements PacienteService {
         return pacienteRepository.save(paciente);
     }
 
-    @Override
-    public Paciente atualizarPaciente(Paciente paciente) {
+    public Paciente atualizarPaciente(Long id, Paciente pacienteNovosDados) {
 
 
-
-        paciente.setEmail(paciente.getEmail());
-        paciente.setNome(paciente.getNome());
-        paciente.setEndereco(paciente.getEndereco());
-        paciente.setTelefone(paciente.getTelefone());
+        Paciente pacienteExistente = pacienteRepository.findById(id)
+                .orElseThrow();
 
 
-        return pacienteRepository.save(paciente);
+        pacienteExistente.setEmail(pacienteNovosDados.getEmail());
+        pacienteExistente.setNome(pacienteNovosDados.getNome());
+        pacienteExistente.setEndereco(pacienteNovosDados.getEndereco());
+        pacienteExistente.setTelefone(pacienteNovosDados.getTelefone());
+
+
+        return pacienteRepository.save(pacienteExistente);
     }
-
     @Override
     public void removerPaciente(Long id) {
 

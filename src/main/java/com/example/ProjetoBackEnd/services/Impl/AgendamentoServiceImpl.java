@@ -6,6 +6,7 @@ import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.AgendamentoRepository;
 import com.example.ProjetoBackEnd.services.AgendamentoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,16 +48,24 @@ public  class AgendamentoServiceImpl  implements AgendamentoService {
     }
 
 
-    @Override
-    public Agendamento atualizar(Agendamento agendamento) {
-        agendamento.setStatusAgendamento(agendamento.getStatusAgendamento());
-        agendamento.setMedico(agendamento.getMedico());
-        agendamento.setPaciente(agendamento.getPaciente());
-        agendamento.setUsuario(agendamento.getUsuario());
-        agendamento.setDataInicio(agendamento.getDataInicio());
-        agendamento.setDataFim(agendamento.getDataFim());
 
-        return agendamentoRepository.save(agendamento);
+    @Override
+    public Agendamento atualizar(int id, Agendamento agendamentoNovosDados) {
+
+
+        Agendamento agendamentoExistente = agendamentoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado com ID: " + id));
+
+
+        agendamentoExistente.setStatusAgendamento(agendamentoNovosDados.getStatusAgendamento());
+        agendamentoExistente.setMedico(agendamentoNovosDados.getMedico());
+        agendamentoExistente.setPaciente(agendamentoNovosDados.getPaciente());
+        agendamentoExistente.setUsuario(agendamentoNovosDados.getUsuario());
+        agendamentoExistente.setDataInicio(agendamentoNovosDados.getDataInicio());
+        agendamentoExistente.setDataFim(agendamentoNovosDados.getDataFim());
+
+
+        return agendamentoRepository.save(agendamentoExistente);
     }
 
     @Override

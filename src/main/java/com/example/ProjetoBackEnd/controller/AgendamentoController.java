@@ -53,8 +53,8 @@ public class AgendamentoController {
     }
 
     @PutMapping("/atualizaragendamento")
-    public Agendamento atualizarAgendamento(@RequestBody Agendamento agendamento) {
-        return agendamentoService.atualizar(agendamento);
+    public Agendamento atualizarAgendamento(@RequestBody int id,Agendamento agendamento) {
+        return agendamentoService.atualizar(id,agendamento);
     }
 
     @DeleteMapping("/deletaragendamento")
