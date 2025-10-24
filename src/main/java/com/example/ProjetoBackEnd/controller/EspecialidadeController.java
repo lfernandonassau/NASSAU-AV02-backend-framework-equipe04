@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/especialidades")
+@RequestMapping("/api/especialidades")
 @CrossOrigin(origins = "http://localhost:5173")
 public class EspecialidadeController {
     private final EspecialidadeRepository especialidadeRepository;
@@ -48,7 +48,7 @@ public class EspecialidadeController {
     public Especialidade salvarEspecialidade(@RequestBody Especialidade especialidade){
         return especialidadeService.salvarEspecialidade(especialidade.getId(), especialidade);
     }
-    @DeleteMapping("/excluirEspecialidade")
+    @DeleteMapping("/excluirEspecialidade/{id}")
     public void excluirEspecialidade(@PathVariable Long id){
         especialidadeService.excluirEspecialidade(id);
     } 

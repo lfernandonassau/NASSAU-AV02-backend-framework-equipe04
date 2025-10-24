@@ -1,11 +1,13 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.ProjetoBackEnd.model.Especialidade;
 import com.example.ProjetoBackEnd.repository.EspecialidadeRepository;
 import com.example.ProjetoBackEnd.services.EspecialidadeService;
 
+@Service
 public class EspecialidadeServiceImpl implements EspecialidadeService {
 
     @Autowired
