@@ -4,7 +4,6 @@ import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 import com.example.ProjetoBackEnd.services.UsuarioService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service

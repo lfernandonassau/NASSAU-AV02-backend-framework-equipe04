@@ -3,6 +3,8 @@ package com.example.ProjetoBackEnd.controller;
 import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
 import com.example.ProjetoBackEnd.services.PacienteService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +26,8 @@ public class PacienteController {
 
     @PostMapping("/salvarpaciente")
     public Paciente salvarPaciente(@RequestBody Paciente paciente) {
-        return pacienteService.cadastrarPaciente(paciente);
+        Paciente novoPaciente = pacienteService.cadastrarPaciente(paciente);
+        return new ResponseEntity<>(novoPaciente, HttpStatus.CREATED).getBody();
     }
 
     @PutMapping("/atualizarcadastropaciente")
