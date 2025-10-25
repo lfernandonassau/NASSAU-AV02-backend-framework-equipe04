@@ -1,21 +1,19 @@
 package com.example.ProjetoBackEnd.controller;
 
-import com.example.ProjetoBackEnd.repository.PacienteRepository;
+import com.example.ProjetoBackEnd.dto.LoginRequest;
+import com.example.ProjetoBackEnd.dto.LoginResponse;
 import com.example.ProjetoBackEnd.services.UsuarioService;
 import org.springframework.web.bind.annotation.*; // o * importa todas as classes do pacote, bom saber
 import com.example.ProjetoBackEnd.model.Usuario;
-import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 
 
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController{
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
@@ -34,12 +32,9 @@ public class UsuarioController{
         return usuarioService.buscarUsuarioPorId(id);
     }
 
-
-
-
-
-
-
-
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest loginRequest){
+        return usuarioService.login(loginRequest);
+    }
 
 }
