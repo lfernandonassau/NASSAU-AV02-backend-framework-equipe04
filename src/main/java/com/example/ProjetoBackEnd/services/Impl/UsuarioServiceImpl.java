@@ -7,6 +7,10 @@ import com.example.ProjetoBackEnd.repository.PacienteRepository;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 import com.example.ProjetoBackEnd.services.JwtTokenService;
 import com.example.ProjetoBackEnd.services.UsuarioService;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PacienteRepository pacienteRepository;
     private final JwtTokenService jwtTokenService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PacienteRepository pacienteRepository, JwtTokenService jwtTokenService) {
         this.usuarioRepository = usuarioRepository;
         this.pacienteRepository = pacienteRepository;
@@ -25,6 +32,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvarUsuario(Usuario usuario) {
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha()); //codifica a senha
+        usuario.setSenha(senhaCriptografada); // salva a senha
         return usuarioRepository.save(usuario);
     }
 
@@ -36,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         novoUser.setNome(user.getNome());
         novoUser.setEmail(user.getEmail());
-        novoUser.setSenha(user.getSenha());
+        novoUser.setSenha(passwordEncoder.encode(user.getSenha()));
         return usuarioRepository.save(novoUser);
     }
 
@@ -59,7 +68,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         Usuario usuario = usuarioOptional.get();
         
-        if (!usuario.getSenha().equals(loginRequest.getSenha())) {
+        if (!passwordEncoder.matches(loginRequest.getSenha(), usuario.getSenha())) { //equals pra matches, além do encoder
             throw new RuntimeException("Senha incorreta");
         }
         
