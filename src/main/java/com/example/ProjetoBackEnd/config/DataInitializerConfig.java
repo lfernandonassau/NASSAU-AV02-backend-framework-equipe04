@@ -24,7 +24,7 @@ public class DataInitializerConfig {
         return args -> {
             if(usuarioRepository.findByEmail("admin@admin.com")==null){
                 System.out.println("criando admin");
-                Usuario admin = new Usuario;
+                Usuario admin = new Usuario();
                 admin.setNome("admin");
                 admin.setSenha(passwordEncoder.encode("admin"));
                 admin.setAtivo(true);
