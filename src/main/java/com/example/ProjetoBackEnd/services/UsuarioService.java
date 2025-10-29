@@ -12,4 +12,6 @@ public interface UsuarioService{
     public void excluirUsuario(Long id);
     public Usuario buscarUsuarioPorId(Long id);
     public LoginResponse login(LoginRequest loginRequest);
+    public void desativarUser(Long id);
+    public void ativarUser(Long id);
 }

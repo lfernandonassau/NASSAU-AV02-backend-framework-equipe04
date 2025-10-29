@@ -9,6 +9,7 @@ import com.example.ProjetoBackEnd.services.JwtTokenService;
 import com.example.ProjetoBackEnd.services.UsuarioService;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,4 +81,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         return loginResponse;
     }
 
-}
+    @Override
+    public void desativarUser(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Usuario não encontrado para desativar"));
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void ativarUser(Long id) {
+
+            Usuario usuario = usuarioRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+            usuario.setAtivo(true);
+            usuarioRepository.save(usuario);
+        }
+
+    }
+

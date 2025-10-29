@@ -1,15 +1,13 @@
 package com.example.ProjetoBackEnd.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,10 +26,12 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
     private boolean ativo = true; // Adicionado o valor default
+    @Enumerated(EnumType.STRING)//valida se é admin ou user
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(this.role.getRoleName()));
     }
 
     @Override
@@ -50,5 +50,6 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() { return true; }
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() {  return this.ativo; }
+
 }
