@@ -33,7 +33,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvarUsuario(Usuario usuario) {
-        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha()); //codifica a senha
+        if(usuario.getNome() == null || usuario.getNome().trim().isEmpty()){
+            throw new IllegalArgumentException("nome invalido");
+        }
+        if(usuario.getEmail() == null || usuario.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            throw new IllegalArgumentException("email invalido");
+        }
+        String senha = usuario.getSenha(); //coloca a senha nessa variavel (completamente seguro, eu acho, culpa do celso qualquer coisa)
+        if(senha == null || senha.length() < 8){
+            throw new IllegalArgumentException("senha invalida");
+        }
+        String senhaCriptografada = passwordEncoder.encode(senha); //codifica a senha
         usuario.setSenha(senhaCriptografada); // salva a senha
         return usuarioRepository.save(usuario);
     }
@@ -41,12 +51,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario atualizarUsuario(Long id ,Usuario user) {
 
-        Usuario novoUser= usuarioRepository.findById(id)
+        Usuario novoUser = usuarioRepository.findById(id)
                 .orElseThrow();
+        String senha = novoUser.getSenha();
+        String email = novoUser.getEmail();
 
+        if(senha == null || senha.length() < 8  ){
+            throw new IllegalArgumentException("senha invalida");
+        }
+        if(email == null || email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            throw new IllegalArgumentException("email invalido");
+        }
         novoUser.setNome(user.getNome());
-        novoUser.setEmail(user.getEmail());
-        novoUser.setSenha(passwordEncoder.encode(user.getSenha()));
+        novoUser.setEmail(email);
+        novoUser.setSenha(passwordEncoder.encode(senha));
         return usuarioRepository.save(novoUser);
     }
 
