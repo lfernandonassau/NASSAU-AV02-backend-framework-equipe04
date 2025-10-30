@@ -17,7 +17,7 @@ public class UsuarioController{
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/usuarios")
+    @PostMapping("/salvar")
     public Usuario salvarUsuario(@RequestBody Usuario usuario){
         return usuarioService.salvarUsuario(usuario);
     }
@@ -30,6 +30,11 @@ public class UsuarioController{
     @GetMapping("/buscar/{id}")
     public Usuario buscarUsuarioPorId(@PathVariable Long id){
         return usuarioService.buscarUsuarioPorId(id);
+    }
+
+    @DeleteMapping("deletaruser")
+    public void deletarUsuarioPorId(@RequestBody Usuario usuario){
+        deletarUsuarioPorId(usuario);
     }
 
     @PostMapping("/login")

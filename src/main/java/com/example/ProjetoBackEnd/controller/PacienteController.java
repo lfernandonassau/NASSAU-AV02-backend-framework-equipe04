@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pacientes")
+@RequestMapping("/api/")
 @CrossOrigin(origins = "http://localhost:5173")
 public class PacienteController {
     private final PacienteService pacienteService;
@@ -29,6 +29,7 @@ public class PacienteController {
         Paciente novoPaciente = pacienteService.cadastrarPaciente(paciente);
         return new ResponseEntity<>(novoPaciente, HttpStatus.CREATED).getBody();
     }
+
 
     @PutMapping("/atualizarcadastropaciente")
     public Paciente atualizarPaciente(@RequestBody Paciente paciente) {

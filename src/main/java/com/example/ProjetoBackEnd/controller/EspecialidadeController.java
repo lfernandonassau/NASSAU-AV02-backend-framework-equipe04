@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/api/especialidades")
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
 public class EspecialidadeController {
     private final EspecialidadeRepository especialidadeRepository;
@@ -44,7 +44,7 @@ public class EspecialidadeController {
     public Especialidade EspecialidadeService(@RequestBody Especialidade especialidade){
         return especialidadeService.cadastrarEspecialidade(especialidade);
     }
-    @PutMapping("/salvarEspecialidade")
+    @PutMapping("/atualizarEspecialidade")
     public Especialidade salvarEspecialidade(@RequestBody Especialidade especialidade){
         return especialidadeService.salvarEspecialidade(especialidade.getId(), especialidade);
     }

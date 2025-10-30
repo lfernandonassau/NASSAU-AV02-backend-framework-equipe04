@@ -26,6 +26,7 @@ public class DataInitializerConfig {
                 System.out.println("criando admin");
                 Usuario admin = new Usuario();
                 admin.setNome("admin");
+                admin.setEmail("admin@admin.com");
                 admin.setSenha(passwordEncoder.encode("admin"));
                 admin.setAtivo(true);
                 admin.setRole(Role_ADMIN);

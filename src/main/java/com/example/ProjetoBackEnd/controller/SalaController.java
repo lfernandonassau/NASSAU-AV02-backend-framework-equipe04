@@ -16,7 +16,7 @@ import com.example.ProjetoBackEnd.services.SalaService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/salas")
+@RequestMapping("/api/salas")
 public class SalaController {
 
     private final SalaService salaService;
