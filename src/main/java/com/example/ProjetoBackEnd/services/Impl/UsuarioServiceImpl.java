@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(usuario.getNome() == null || usuario.getNome().trim().isEmpty()){
             throw new IllegalArgumentException("nome invalido");
         }
-        if(usuario.getEmail() == null || usuario.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+        if(usuario.getEmail() == null || !usuario.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
             throw new IllegalArgumentException("email invalido");
         }
         String senha = usuario.getSenha(); //coloca a senha nessa variavel (completamente seguro, eu acho, culpa do celso qualquer coisa)

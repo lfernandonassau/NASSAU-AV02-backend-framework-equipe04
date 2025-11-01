@@ -25,7 +25,7 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
-    private boolean ativo = true; // Adicionado o valor default
+    private boolean ativo = true;
     @Enumerated(EnumType.STRING)//valida se é admin ou user
     private Role role;
 

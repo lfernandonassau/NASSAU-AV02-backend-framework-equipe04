@@ -1,9 +1,10 @@
 package com.example.ProjetoBackEnd.model;
 
 public enum Role {
-    Role_ADMIN,
-    ROLE_USER;
+    ADMIN,
+    USER;
+
     public String getRoleName() {
-        return name();
+        return "ROLE_" + this.name(); // Retorna ROLE_ADMIN ou ROLE_USER
     }
 }

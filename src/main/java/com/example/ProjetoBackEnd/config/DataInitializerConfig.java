@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.example.ProjetoBackEnd.model.Role.Role_ADMIN;
+
 
 @Configuration
 public class DataInitializerConfig {
@@ -22,14 +22,14 @@ public class DataInitializerConfig {
     @Bean
     public CommandLineRunner loadData() {
         return args -> {
-            if(usuarioRepository.findByEmail("admin@admin.com")==null){
+            if(usuarioRepository.findByEmail("admin@admin.com").isEmpty()){
                 System.out.println("criando admin");
                 Usuario admin = new Usuario();
                 admin.setNome("admin");
                 admin.setEmail("admin@admin.com");
                 admin.setSenha(passwordEncoder.encode("admin"));
                 admin.setAtivo(true);
-                admin.setRole(Role_ADMIN);
+                admin.setRole(Role.ADMIN);
                 usuarioRepository.save(admin);
                 System.out.println("Usuário ADMIN criado.");
 
