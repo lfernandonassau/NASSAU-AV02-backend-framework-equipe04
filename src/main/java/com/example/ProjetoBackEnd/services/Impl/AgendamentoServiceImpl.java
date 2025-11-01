@@ -19,11 +19,13 @@ public  class AgendamentoServiceImpl  implements AgendamentoService {
 
     @Override
     public Agendamento salvar(Agendamento agendamento) {
+
         return agendamentoRepository.save(agendamento);
     }
 
     @Override
     public List<Agendamento> listarTodos() {
+
         return agendamentoRepository.findAll();
     }
 
@@ -34,11 +36,13 @@ public  class AgendamentoServiceImpl  implements AgendamentoService {
 
     @Override
     public List<Agendamento> buscarPorMedico(Medico medico) {
+
         return agendamentoRepository.findByMedico(medico);
     }
 
     @Override
     public List<Agendamento> buscarPorUser(Usuario usuario) {
+
         return agendamentoRepository.findByUsuario(usuario);
     }
 

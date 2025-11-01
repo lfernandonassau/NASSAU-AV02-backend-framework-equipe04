@@ -13,6 +13,15 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     @Autowired
     private EspecialidadeRepository especialidadeRepository;
 
+    public void validarEspecialidade(Especialidade especialidade){
+        if(especialidade.getNome() == null){
+            throw new IllegalArgumentException("nome da especialidade invalida");
+        }
+        if(especialidade.getDescricao() == null){
+            throw new IllegalArgumentException("Descreva a especialidade");
+        }
+    }
+
     @Override
     public Especialidade buscarEspecialidade(String nome){
 
@@ -22,12 +31,13 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     
     @Override
     public Especialidade cadastrarEspecialidade(Especialidade especialidade){
+        validarEspecialidade(especialidade);
         return this.especialidadeRepository.save(especialidade);
     }
 
     @Override
     public Especialidade salvarEspecialidade(Long id, Especialidade especialidadeNovosDados){
-
+        validarEspecialidade(especialidadeNovosDados);
         Especialidade especialidadeExistente = especialidadeRepository.findById(id).orElseThrow();
 
         especialidadeExistente.setNome(especialidadeNovosDados.getNome());

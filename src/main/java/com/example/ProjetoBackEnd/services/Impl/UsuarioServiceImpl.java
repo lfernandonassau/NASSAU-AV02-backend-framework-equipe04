@@ -30,38 +30,42 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.pacienteRepository = pacienteRepository;
         this.jwtTokenService = jwtTokenService;
     }
-
-    @Override
-    public Usuario salvarUsuario(Usuario usuario) {
+    public void validarUsuario(Usuario usuario){
         if(usuario.getNome() == null || usuario.getNome().trim().isEmpty()){
             throw new IllegalArgumentException("nome invalido");
         }
         if(usuario.getEmail() == null || !usuario.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
             throw new IllegalArgumentException("email invalido");
         }
-        String senha = usuario.getSenha(); //coloca a senha nessa variavel (completamente seguro, eu acho, culpa do celso qualquer coisa)
-        if(senha == null || senha.length() < 8){
+
+        if(usuario.getSenha() == null || usuario.getSenha().length() < 8){
             throw new IllegalArgumentException("senha invalida");
         }
+        if(usuario.getRole() == null){
+            throw new IllegalArgumentException("Trabalho do usuario não definido");
+        }
+
+    }
+
+    @Override
+    public Usuario salvarUsuario(Usuario usuario) {
+
+
+        validarUsuario(usuario);
+        String senha = usuario.getSenha(); //coloca a senha nessa variavel (completamente seguro, eu acho, culpa do celso qualquer coisa)
         String senhaCriptografada = passwordEncoder.encode(senha); //codifica a senha
         usuario.setSenha(senhaCriptografada); // salva a senha
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public Usuario atualizarUsuario(Long id ,Usuario user) {
-
+    public Usuario atualizarUsuario(Long id, Usuario user) {
         Usuario novoUser = usuarioRepository.findById(id)
-                .orElseThrow();
-        String senha = novoUser.getSenha();
-        String email = novoUser.getEmail();
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
 
-        if(senha == null || senha.length() < 8  ){
-            throw new IllegalArgumentException("senha invalida");
-        }
-        if(email == null || email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            throw new IllegalArgumentException("email invalido");
-        }
+        validarUsuario(user);
+        String senha = user.getSenha();
+        String email = user.getEmail();
         novoUser.setNome(user.getNome());
         novoUser.setEmail(email);
         novoUser.setSenha(passwordEncoder.encode(senha));

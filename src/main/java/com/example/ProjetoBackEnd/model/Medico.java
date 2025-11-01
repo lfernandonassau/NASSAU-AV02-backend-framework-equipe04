@@ -14,7 +14,7 @@ public class Medico {
 
     private String nome;
     private String crm;
-    private String telefone;
+    private Long telefone;
     private boolean ativo = true; 
 
     @ManyToOne
