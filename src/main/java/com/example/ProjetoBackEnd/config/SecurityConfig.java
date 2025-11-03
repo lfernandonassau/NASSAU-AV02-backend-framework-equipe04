@@ -53,6 +53,7 @@
                             .requestMatchers(HttpMethod.POST,"/api/medico/cadastrar").authenticated()
                             .requestMatchers(HttpMethod.DELETE,"/api/medico/deletar/{id}").authenticated()
                             .requestMatchers(HttpMethod.PUT,"/api/medico/atualizar/{id}").authenticated()
+                            .requestMatchers(HttpMethod.GET,"/api/medico/buscar/{id}").authenticated()
 
                             .requestMatchers(HttpMethod.GET, "/api/salas/buscarSalaPorId/{id}").authenticated()
                             .requestMatchers(HttpMethod.POST, "/api/salas/salvarSala").authenticated()

@@ -1,5 +1,10 @@
 package com.example.ProjetoBackEnd.controller;
 
+import com.example.ProjetoBackEnd.dto.EspecialidadeDTO;
+import com.example.ProjetoBackEnd.dto.EspecialidadeResponse;
+import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +24,9 @@ import com.example.ProjetoBackEnd.services.MedicoService;
 import com.example.ProjetoBackEnd.services.PacienteService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.server.ResponseStatusException;
 
-
-
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 
 @RestController
@@ -37,11 +42,16 @@ public class EspecialidadeController {
     }
 
     @GetMapping("/buscarEspecialidade/{nome}")
-    public Especialidade Especialidade(@PathVariable String nome){
-        return especialidadeService.buscarEspecialidade(nome);
+    @Transactional
+    public ResponseEntity<EspecialidadeResponse> buscarPorNome(@PathVariable String nome){
+        Especialidade especialidade = especialidadeRepository.findByNome(nome);
+
+        EspecialidadeResponse especialidadeResponse = new EspecialidadeResponse(especialidade);
+        return ResponseEntity.ok(especialidadeResponse);
     }
     @PostMapping("/cadastrarEspecialidade")
     public Especialidade EspecialidadeService(@RequestBody Especialidade especialidade){
+
         return especialidadeService.cadastrarEspecialidade(especialidade);
     }
     @PutMapping("/atualizarEspecialidade")

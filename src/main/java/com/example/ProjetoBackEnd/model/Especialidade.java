@@ -1,14 +1,11 @@
 package com.example.ProjetoBackEnd.model;
 
-import jakarta.persistence.OneToMany;
+import com.example.ProjetoBackEnd.dto.MedicoResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 
 @Entity
@@ -16,10 +13,12 @@ import jakarta.persistence.Id;
 public class Especialidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-    private String nome; 
-    private String descricao; 
+    private Long id;
+    private String nome;
+    private String descricao;
 
-    @OneToMany(mappedBy = "especialidade")
+
+    @OneToMany(mappedBy = "especialidade",fetch = FetchType.EAGER)
     private List<Medico> medicos;
+
 }
