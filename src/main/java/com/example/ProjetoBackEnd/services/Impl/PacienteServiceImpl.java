@@ -1,5 +1,6 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
+import com.example.ProjetoBackEnd.dto.PacienteDTO;
 import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
@@ -10,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Calendar;
-
+import java.util.Optional;
 
 
 @Service
@@ -103,5 +104,20 @@ public class PacienteServiceImpl implements PacienteService {
 
         pacienteRepository.deleteById(id);
     }
+
+    @Override
+    public Paciente conversaoDTO(PacienteDTO pacienteDTO) {
+
+        Paciente paciente = new Paciente();
+        paciente.setNome(pacienteDTO.getNome());
+        paciente.setTelefone(Long.valueOf(pacienteDTO.getTelefone()));
+        paciente.setEmail(pacienteDTO.getEmail());
+        paciente.setDataNascimento(pacienteDTO.getDataNascimento());
+        paciente.setEndereco(pacienteDTO.getEndereco());
+
+
+        return pacienteRepository.save(paciente);
+    }
+
 
 }
