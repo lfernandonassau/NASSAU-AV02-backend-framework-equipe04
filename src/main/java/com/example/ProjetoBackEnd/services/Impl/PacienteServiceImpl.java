@@ -35,7 +35,7 @@ public class PacienteServiceImpl implements PacienteService {
             throw new IllegalArgumentException("telfone do Paciente invalido");
         }
         if(paciente.getEmail() == null || !paciente.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
-            throw new IllegalArgumentException("Email");
+            throw new IllegalArgumentException("Email invalido");
         }
         if(paciente.getDataNascimento() == null){
             throw new IllegalArgumentException("Data de nascimento do paciente invalida");
