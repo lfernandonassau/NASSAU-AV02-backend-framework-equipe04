@@ -61,6 +61,8 @@
                             .requestMatchers(HttpMethod.DELETE, "/api/salas/excluirSala/{id}").authenticated()
 
                             .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/usuarios/forgot-password").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/usuarios/reset-password").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/admin/desativar/{id}").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/admin/ativar/{id}").hasRole("ADMIN")
