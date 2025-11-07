@@ -1,11 +1,11 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
-import com.example.ProjetoBackEnd.model.PasswordResetToken;
+import com.example.ProjetoBackEnd.model.RedefinirSenhaToken;
 import com.example.ProjetoBackEnd.model.Usuario;
-import com.example.ProjetoBackEnd.repository.PasswordResetTokenRepository;
+import com.example.ProjetoBackEnd.repository.RedefinirSenhaTokenRepository;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 import com.example.ProjetoBackEnd.services.EmailService;
-import com.example.ProjetoBackEnd.services.PasswordResetService;
+import com.example.ProjetoBackEnd.services.RedefinirSenhaService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,18 +16,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PasswordResetServiceImpl implements PasswordResetService {
+public class RedefinirSenhaServiceImpl implements RedefinirSenhaService {
 
     private final UsuarioRepository usuarioRepository;
-    private final PasswordResetTokenRepository tokenRepository;
+    private final RedefinirSenhaTokenRepository tokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${app.reset.base-url:http://localhost:5173/reset-password}")
     private String resetBaseUrl;
 
-    public PasswordResetServiceImpl(UsuarioRepository usuarioRepository,
-                                    PasswordResetTokenRepository tokenRepository,
+    public RedefinirSenhaServiceImpl(UsuarioRepository usuarioRepository,
+                                    RedefinirSenhaTokenRepository tokenRepository,
                                     EmailService emailService,
                                     PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
@@ -40,11 +40,11 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     public void startReset(String email) {
         Optional<Usuario> userOpt = usuarioRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
-            // não revelar se o email existe
+            // não revela se o email existe
             return;
         }
         Usuario usuario = userOpt.get();
-        PasswordResetToken token = new PasswordResetToken();
+        RedefinirSenhaToken token = new RedefinirSenhaToken();
         token.setUsuario(usuario);
         token.setToken(UUID.randomUUID().toString());
         token.setExpiresAt(Instant.now().plus(1, ChronoUnit.HOURS));
@@ -62,7 +62,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
     @Override
     public void finishReset(String tokenValue, String newPassword) {
-        PasswordResetToken token = tokenRepository.findByToken(tokenValue)
+        RedefinirSenhaToken token = tokenRepository.findByToken(tokenValue)
                 .orElseThrow(() -> new IllegalArgumentException("Token inválido"));
         if (token.isUsed() || token.getExpiresAt().isBefore(Instant.now())) {
             throw new IllegalArgumentException("Token expirado ou já utilizado");

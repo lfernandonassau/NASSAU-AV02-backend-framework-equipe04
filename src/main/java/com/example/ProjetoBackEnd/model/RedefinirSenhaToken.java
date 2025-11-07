@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-public class PasswordResetToken {
+public class RedefinirSenhaToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

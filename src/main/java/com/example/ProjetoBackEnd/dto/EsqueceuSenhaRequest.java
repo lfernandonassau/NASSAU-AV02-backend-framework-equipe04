@@ -3,7 +3,7 @@ package com.example.ProjetoBackEnd.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class ForgotPasswordRequest {
+public class EsqueceuSenhaRequest {
     @NotBlank
     @Email
     private String email;
