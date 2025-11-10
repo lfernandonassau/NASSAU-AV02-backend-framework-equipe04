@@ -1,10 +1,12 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
+import com.example.ProjetoBackEnd.dto.AgendamentoDTO;
 import com.example.ProjetoBackEnd.model.Agendamento;
 import com.example.ProjetoBackEnd.model.Medico;
 import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.AgendamentoRepository;
+import com.example.ProjetoBackEnd.repository.MedicoRepository;
 import com.example.ProjetoBackEnd.services.AgendamentoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Service
-public  class AgendamentoServiceImpl  implements AgendamentoService {
+public class AgendamentoServiceImpl implements AgendamentoService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+    @Autowired
+    private MedicoRepository medicoRepository;
 
     @Override
     public Agendamento salvar(Agendamento agendamento) {
@@ -52,7 +58,6 @@ public  class AgendamentoServiceImpl  implements AgendamentoService {
     }
 
 
-
     @Override
     public Agendamento atualizar(int id, Agendamento agendamentoNovosDados) {
 
@@ -83,4 +88,24 @@ public  class AgendamentoServiceImpl  implements AgendamentoService {
 
 
     }
+
+    @Override
+    public Agendamento conversaoDTO(AgendamentoDTO agendamentoDTO) {
+        String nomeMedico = agendamentoDTO.getNomeMedico();
+
+        Medico medico = medicoRepository.findByNome(nomeMedico);
+        if(medico == null){
+            throw new RuntimeException("Medico: " + nomeMedico + " não encontrado." );
+        }
+        Agendamento agendamento = new Agendamento();
+
+        agendamento.setDataInicio(agendamentoDTO.getDataInicio());
+        agendamento.setDataFim(agendamentoDTO.getDataFim());
+        agendamento.setTipoAgendamento(agendamentoDTO.getTipoAgendamento());
+        agendamento.setStatusAgendamento(agendamento.getStatusAgendamento());
+        agendamento.setMedico(medico);
+
+        return  agendamentoRepository.save(agendamento);
+    }
+
 }

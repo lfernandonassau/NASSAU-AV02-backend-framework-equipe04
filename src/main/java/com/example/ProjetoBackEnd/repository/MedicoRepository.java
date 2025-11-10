@@ -7,6 +7,5 @@ import com.example.ProjetoBackEnd.model.Medico;
 import java.util.Optional;
 
 public interface MedicoRepository extends JpaRepository<Medico, Long>{
-
-
+    public abstract Medico findByNome(String nome);
 }
