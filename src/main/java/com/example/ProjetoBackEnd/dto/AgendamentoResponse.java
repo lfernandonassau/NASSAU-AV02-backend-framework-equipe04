@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@NoArgsConstructorg
+@NoArgsConstructor
 public class AgendamentoResponse {
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
