@@ -1,5 +1,7 @@
 package com.example.ProjetoBackEnd.services;
 
+import com.example.ProjetoBackEnd.dto.AgendamentoDTO;
+import com.example.ProjetoBackEnd.dto.MedicoDTO;
 import com.example.ProjetoBackEnd.model.Agendamento;
 import com.example.ProjetoBackEnd.model.Medico;
 import com.example.ProjetoBackEnd.model.Paciente;
@@ -18,6 +20,7 @@ public interface AgendamentoService {
     public Agendamento atualizar(int id, Agendamento agendamento);
     List<Agendamento> verificarHorario(LocalDateTime dataInicio, LocalDateTime dataFim);
     public void remover(Integer id);
+    public Agendamento conversaoDTO(AgendamentoDTO agendamentoDTO);
 
 
 }

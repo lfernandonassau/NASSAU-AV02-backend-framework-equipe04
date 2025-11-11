@@ -2,7 +2,7 @@ package com.example.ProjetoBackEnd.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class RedefinirSenhaRequest {
+public class ResetPasswordRequest {
     @NotBlank
     private String token;
 

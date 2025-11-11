@@ -32,7 +32,6 @@ public class DataInitializerConfig {
                 admin.setRole(Role.ADMIN);
                 usuarioRepository.save(admin);
                 System.out.println("Usuário ADMIN criado.");
-
             }
         };
 
