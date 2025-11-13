@@ -100,18 +100,17 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         String nomeMedico = agendamentoDTO.getNomeMedico();
 
         Medico medico = medicoRepository.findByNome(nomeMedico);
-        if(medico == null){
-            throw new RuntimeException("Medico: " + nomeMedico + " não encontrado." );
+        if (medico == null) {
+            throw new RuntimeException("Medico: " + nomeMedico + " não encontrado.");
         }
         String nomePaciente = agendamentoDTO.getNomePaciente();
         Paciente paciente = pacienteRepository.findByNome(nomePaciente);
-        if(paciente == null){
-            throw new RuntimeException("Paciente: " + nomePaciente + " não encontrado." );
+        if (paciente == null) {
+            throw new RuntimeException("Paciente: " + nomePaciente + " não encontrado.");
         }
         String nomeUsuario = agendamentoDTO.getNomeUsuario();
         Usuario usuario = usuarioRepository.findByNome(nomeUsuario);
-        if(usuario == null){
-        
+
         Agendamento agendamento = new Agendamento();
 
         agendamento.setDataInicio(agendamentoDTO.getDataInicio());
@@ -122,7 +121,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento.setPaciente(paciente);
         agendamento.setUsuario(usuario);
 
-        return  agendamentoRepository.save(agendamento);
-    }
+        return agendamentoRepository.save(agendamento);
 
+    }
 }

@@ -32,3 +32,6 @@ public class AgendamentoResponse {
         this.nomeSala     = agendamento.getSala()     != null ? agendamento.getSala().getNome()     : null;
     }
 }
+
+
+

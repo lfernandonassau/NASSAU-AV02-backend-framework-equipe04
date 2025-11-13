@@ -34,4 +34,9 @@ public class Agendamento {
     @ManyToOne
     @JoinColumn(name = "paciente_id") 
     private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "sala_id")
+    private Sala sala;
+
 }
