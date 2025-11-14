@@ -47,7 +47,7 @@
                             .requestMatchers(HttpMethod.GET, "/usuarios/buscar/{id}").authenticated()
                             .requestMatchers(HttpMethod.PUT, "/usuarios/atualizaruser").authenticated()
 
-                            .requestMatchers(HttpMethod.POST,"/usuarios/salvar").permitAll() // lembrar de voltar pro autenticado
+                            .requestMatchers(HttpMethod.POST,"/usuarios/salvar").authenticated()
                             .requestMatchers(HttpMethod.DELETE,"/usuarios/deletaruser").hasRole("ADMIN")
 
                             .requestMatchers(HttpMethod.POST,"/api/medico/cadastrar").authenticated()
@@ -64,8 +64,8 @@
                             .requestMatchers(HttpMethod.POST, "/usuarios/forgot-password").permitAll()
                             .requestMatchers(HttpMethod.POST, "/usuarios/reset-password").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.POST, "/admin/desativar/{id}").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.POST, "/admin/ativar/{id}").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.PATCH, "/admin/desativar/{id}").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.PATCH, "/admin/ativar/{id}").hasRole("ADMIN")
 
                             .anyRequest().authenticated()
                     )
