@@ -14,13 +14,11 @@ public class Paciente {
     private Long id; // Simplificado
     private String nome; // Simplificado
     private Long cpf; // Simplificado
-    private Long telefone; // Simplificado
+    private String telefone; // Simplificado
     private String endereco; // Simplificado
     private String email; // Simplificado
     private Date dataNascimento; // Corrigido para CamelCase
     private boolean ativo = true; // Simplificado e com valor default
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id") // Ajustado para evitar conflito com o 'id' do Paciente
-    private Usuario usuario;
+
 }

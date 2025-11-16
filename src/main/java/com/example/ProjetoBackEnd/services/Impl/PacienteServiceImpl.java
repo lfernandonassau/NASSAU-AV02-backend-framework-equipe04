@@ -1,6 +1,7 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
 import com.example.ProjetoBackEnd.dto.PacienteDTO;
+import com.example.ProjetoBackEnd.model.Especialidade;
 import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
@@ -11,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.Optional;
 
 
 @Service
@@ -23,9 +23,9 @@ public class PacienteServiceImpl implements PacienteService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // metodo pra validar o paciente, depois eu faço pro usuario
 
-    public void validarPaciente(Paciente paciente){
+
+    public void validarPaciente(PacienteDTO paciente){
         if(paciente.getNome() == null || paciente.getNome().trim().isEmpty() ){
             throw new IllegalArgumentException("nome do Paciente invalido");
         }
@@ -68,25 +68,20 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Paciente cadastrarPaciente(Paciente paciente) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = principal.toString();
+    public Paciente cadastrarPaciente(PacienteDTO paciente) {
+       Paciente paciente1 = conversaoDTO(paciente);
 
-        Usuario usuarioLogado = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Erro: Usuário logado não encontrado no sistema."));
-
-                    paciente.setUsuario(usuarioLogado);
-
-        validarPaciente(paciente);   // aqui
-        return pacienteRepository.save(paciente);
+        validarPaciente(paciente);
+        return pacienteRepository.save(paciente1);
     }
 
-    public Paciente atualizarPaciente(Long id, Paciente pacienteNovosDados) {
-
+    public Paciente atualizarPaciente(Long id, PacienteDTO pacienteNovosDados) {
+        validarPaciente(pacienteNovosDados);
 
         Paciente pacienteExistente = pacienteRepository.findById(id)
                 .orElseThrow();
 
+        if()
 
         pacienteExistente.setEmail(pacienteNovosDados.getEmail());
         pacienteExistente.setNome(pacienteNovosDados.getNome());
@@ -95,7 +90,7 @@ public class PacienteServiceImpl implements PacienteService {
         pacienteExistente.setCpf(pacienteNovosDados.getCpf());
         pacienteExistente.setDataNascimento(pacienteNovosDados.getDataNascimento());
 
-        validarPaciente(pacienteExistente);
+
 
         return pacienteRepository.save(pacienteExistente);
     }
@@ -110,10 +105,11 @@ public class PacienteServiceImpl implements PacienteService {
 
         Paciente paciente = new Paciente();
         paciente.setNome(pacienteDTO.getNome());
-        paciente.setTelefone(Long.valueOf(pacienteDTO.getTelefone()));
+        paciente.setTelefone((pacienteDTO.getTelefone()));
         paciente.setEmail(pacienteDTO.getEmail());
         paciente.setDataNascimento(pacienteDTO.getDataNascimento());
         paciente.setEndereco(pacienteDTO.getEndereco());
+
 
 
         return pacienteRepository.save(paciente);

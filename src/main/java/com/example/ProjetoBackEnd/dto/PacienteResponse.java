@@ -10,17 +10,17 @@ import com.example.ProjetoBackEnd.model.Paciente;
 public class PacienteResponse {
     
     private String  nome;
-    private Long    telefone;
+    private String    telefone;
     private String  email;
     private Date dataNascimento;
-    private String  nomeUsuario;
+
 
     public PacienteResponse(Paciente paciente) {
         this.nome = paciente.getNome();
         this.telefone = paciente.getTelefone();
         this.email = paciente.getEmail();
         this.dataNascimento = paciente.getDataNascimento();
-        this.nomeUsuario = paciente.getUsuario().getEmail();
+
     }
 }
 

@@ -22,7 +22,7 @@ public class PacienteController {
         this.pacienteRepository = pacienteRepository;
     }
 
-    @GetMapping("/buscarpaciente/{nome}")
+    @GetMapping("/buscarpaciente/{id}")
     public ResponseEntity<PacienteResponse> buscarPaciente(@PathVariable String nome) {
 
         Paciente paciente = pacienteRepository.findByNome(nome);
@@ -42,10 +42,12 @@ public class PacienteController {
     }
 
 
-    @PutMapping("/atualizarcadastropaciente")
-    public Paciente atualizarPaciente(@RequestBody Paciente paciente) {
+    @PutMapping("/atualizarcadastropaciente/{id}")
+    public ResponseEntity<PacienteResponse>atualizarPaciente(@PathVariable Long id,@RequestBody PacienteDTO paciente) {
+        Paciente pacienteAtt= pacienteService.atualizarPaciente(id,paciente);
+        PacienteResponse pacienteResponse = new PacienteResponse(pacienteAtt);
+       return ResponseEntity.ok(pacienteResponse);
 
-        return pacienteService.atualizarPaciente(paciente.getId(), paciente);
     }
 
     @DeleteMapping("/deletarpaciente/{id}")

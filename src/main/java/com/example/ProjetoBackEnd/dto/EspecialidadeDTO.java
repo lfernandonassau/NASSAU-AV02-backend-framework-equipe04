@@ -10,6 +10,7 @@ public class EspecialidadeDTO {
     private String nomeEspecialidade;
     private String descricao;
 
+
     public EspecialidadeDTO(String nomeEspecialidade) {
         this.nomeEspecialidade = nomeEspecialidade;
 

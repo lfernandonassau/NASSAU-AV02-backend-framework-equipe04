@@ -10,8 +10,8 @@ import com.example.ProjetoBackEnd.repository.PacienteRepository;
 public interface PacienteService {
 
     public Paciente buscarPacientePorNome(String nome);
-    public Paciente cadastrarPaciente(Paciente paciente);
-    public Paciente atualizarPaciente(Long id, Paciente paciente);
+    public Paciente cadastrarPaciente(PacienteDTO pacienteDTO);
+    public Paciente atualizarPaciente(Long id, PacienteDTO paciente);
     public void removerPaciente(Long id);
     public Paciente conversaoDTO(PacienteDTO pacienteDTO);
 

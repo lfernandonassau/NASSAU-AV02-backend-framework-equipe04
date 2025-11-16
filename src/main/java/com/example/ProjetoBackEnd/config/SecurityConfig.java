@@ -39,8 +39,7 @@
                             .requestMatchers(HttpMethod.DELETE, "/api/excluirEspecialidade/{id}").authenticated()
 
                             .requestMatchers(HttpMethod.POST, "/api/salvarpaciente").authenticated()
-                            .requestMatchers(HttpMethod.GET, "/api/buscarPaciente/{nome}").authenticated()
-                            .requestMatchers(HttpMethod.GET, "/api/buscarPaciente/{id}").authenticated()
+                            .requestMatchers(HttpMethod.GET, "/api/buscarpaciente/{nome}").authenticated()
                             .requestMatchers(HttpMethod.PUT,"/api/atualizarcadastropaciente").authenticated()
                             .requestMatchers(HttpMethod.DELETE,"/api/deletaroaciente/{id}").authenticated()
 
