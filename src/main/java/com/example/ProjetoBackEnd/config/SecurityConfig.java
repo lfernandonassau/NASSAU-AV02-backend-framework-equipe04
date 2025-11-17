@@ -45,7 +45,6 @@
 
                             .requestMatchers(HttpMethod.GET, "/usuarios/buscar/{id}").authenticated()
                             .requestMatchers(HttpMethod.PUT, "/usuarios/atualizaruser").authenticated()
-
                             .requestMatchers(HttpMethod.POST,"/usuarios/salvar").authenticated()
                             .requestMatchers(HttpMethod.DELETE,"/usuarios/deletaruser").hasRole("ADMIN")
 

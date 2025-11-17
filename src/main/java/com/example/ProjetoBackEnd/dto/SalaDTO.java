@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SalaDTO {
-
+    private Long salaId;
     private String nome;
     private Long medicoId;
     private Long pacienteId;

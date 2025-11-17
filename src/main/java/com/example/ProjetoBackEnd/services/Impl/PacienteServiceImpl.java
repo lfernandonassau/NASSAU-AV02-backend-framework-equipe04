@@ -1,14 +1,12 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
 import com.example.ProjetoBackEnd.dto.PacienteDTO;
-import com.example.ProjetoBackEnd.model.Especialidade;
+
 import com.example.ProjetoBackEnd.model.Paciente;
-import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.PacienteRepository;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 import com.example.ProjetoBackEnd.services.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Calendar;
@@ -81,7 +79,7 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente pacienteExistente = pacienteRepository.findById(id)
                 .orElseThrow();
 
-        if()
+
 
         pacienteExistente.setEmail(pacienteNovosDados.getEmail());
         pacienteExistente.setNome(pacienteNovosDados.getNome());

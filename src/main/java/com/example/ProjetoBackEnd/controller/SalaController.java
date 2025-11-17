@@ -1,5 +1,6 @@
 package com.example.ProjetoBackEnd.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,19 +38,26 @@ public class SalaController {
     }
 
     @GetMapping("/buscarSalaPorId/{id}")
-    public SalaResponse buscarSalaPorId(@PathVariable Long id) {
+    public ResponseEntity<SalaResponse> buscarSalaPorId(@PathVariable Long id) {
         Sala sala = salaService.buscarSalaPorId(id);
-        return new SalaResponse(sala);
+        SalaResponse salaResponse = new SalaResponse(sala);
+        return ResponseEntity.ok(salaResponse);
     }
 
     @PostMapping("/salvarSala")
-    public Sala salvarSala(@RequestBody Sala sala) {
-        return salaService.salvarSala(sala);
+    public ResponseEntity<SalaResponse> salvarSala(@RequestBody SalaDTO sala) {
+        Sala sala1 = salaService.salvarSala(sala);
+        SalaResponse  salaResponse = new SalaResponse(sala1);
+
+        return ResponseEntity.ok(salaResponse);
     }
 
     @PutMapping("/atualizarSala")
-    public Sala atualizarSala(@RequestBody Sala sala) {
-        return salaService.atualizarSala(sala);
+    public ResponseEntity<SalaResponse> atualizarSala(@RequestBody SalaDTO sala) {
+        Sala salatt = salaService.atualizarSala(sala);
+        SalaResponse  salaResponse = new SalaResponse(salatt);
+
+        return ResponseEntity.ok(salaResponse);
     }
 
     @DeleteMapping("/excluirSala/{id}")

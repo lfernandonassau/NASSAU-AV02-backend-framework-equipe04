@@ -6,10 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sala {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +27,6 @@ public class Sala {
     @JoinColumn(name = "paciente_id") 
     private Paciente paciente;
 
-    
+
+
 }

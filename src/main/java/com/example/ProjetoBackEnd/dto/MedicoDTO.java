@@ -15,6 +15,8 @@ public class MedicoDTO {
 
     private String nomeEspecialidade;
 
+    private AgendamentoDTO agendamento;
+
     private boolean ativo;
 
 }

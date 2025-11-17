@@ -8,9 +8,9 @@ public interface MedicoService {
 
     public Medico buscarMedicoPorId(Long id);
     public Medico cadastrarMedico(MedicoDTO medicoDTO);
-    public Medico atualizarMedico(Long id, Medico medico);
+    public Medico atualizarMedico(Long id, MedicoDTO medico);
     public void deletarMedico(Long id);
-    public Medico conversaoDTO(MedicoDTO medicoDTO);
+
 
     
 }

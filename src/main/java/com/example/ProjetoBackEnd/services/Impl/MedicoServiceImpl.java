@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.ProjetoBackEnd.model.*;
-import org.springframework.web.server.ResponseStatusException;;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 
 
 @Service
@@ -22,16 +23,14 @@ public class MedicoServiceImpl implements MedicoService {
     private EspecialidadeRepository especialidadeRepository;
 
 
-    public void validarMedico(Medico medico) {
+    public void validarMedico(MedicoDTO medico) {
         if (medico.getNome() == null || medico.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("Nome do medico invalido");
         }
         if (medico.getCrm() == null) {
             throw new IllegalArgumentException("CRM inválido");
         }
-        if (medico.getTelefone() == null || medico.getTelefone().toString().length() < 11) {
-            throw new IllegalArgumentException("Telefone invalido");
-        }
+
 
     }
 
@@ -43,6 +42,7 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public Medico cadastrarMedico(MedicoDTO medicoDTO) {
+        validarMedico(medicoDTO);
 
         Especialidade especialidade = especialidadeRepository.findByNome(medicoDTO.getNomeEspecialidade());
 
@@ -64,16 +64,18 @@ public class MedicoServiceImpl implements MedicoService {
 
 
     @Override
-    public Medico atualizarMedico(Long id, Medico medicoNovosDados) {
-        validarMedico(medicoNovosDados);
+    public Medico atualizarMedico(Long id, MedicoDTO medico) {
+        validarMedico(medico);
 
         Medico medicoExistente = medicoRepository.findById(id).orElseThrow();
 
-        medicoExistente.setNome(medicoNovosDados.getNome());
-        medicoExistente.setCrm(medicoNovosDados.getCrm());
-        medicoExistente.setTelefone(medicoNovosDados.getTelefone());
-        medicoExistente.setEspecialidade(medicoNovosDados.getEspecialidade());
-        medicoExistente.setAgendamentos(medicoNovosDados.getAgendamentos());
+
+        medicoExistente.setNome(medico.getNome());
+        medicoExistente.setCrm(medico.getCrm());
+        medicoExistente.setEspecialidade(especialidadeRepository.findByNome(medico.getNomeEspecialidade()));
+        medicoExistente.setAtivo(medico.isAtivo());
+
+        medicoExistente.setAgendamentos((List<Agendamento>) medico.getAgendamento());
 
         return medicoRepository.save(medicoExistente);
     }
@@ -84,23 +86,6 @@ public class MedicoServiceImpl implements MedicoService {
         medicoRepository.deleteById(id);
     }
 
-    @Override
-    public Medico conversaoDTO(MedicoDTO medicoDTO) {
-        String nomeeEspecialidade = medicoDTO.getNomeEspecialidade();
-        Especialidade especialidade = especialidadeRepository.findByNome(nomeeEspecialidade);
-        if (especialidade == null) {
-            throw new RuntimeException("Especialidade" + nomeeEspecialidade + "não encontrada");
-        }
-            Medico medico = new Medico();
-            medico.setNome(medicoDTO.getNome());
-            medico.setCrm(medicoDTO.getCrm());
-            medico.setAtivo(medicoDTO.isAtivo());
-            medico.setEspecialidade(especialidade);
 
-            return medicoRepository.save(medico);
-
-
-
-    }
 }
 

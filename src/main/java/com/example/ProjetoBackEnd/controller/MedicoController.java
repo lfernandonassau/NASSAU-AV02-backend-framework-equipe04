@@ -19,7 +19,7 @@ import java.util.List;
 public class MedicoController {
 
 @Autowired
-private final MedicoService medicoService;
+private final MedicoService medicoService ;
 
 public MedicoController(MedicoService medicoService) {
     this.medicoService = medicoService;
@@ -29,7 +29,7 @@ public MedicoController(MedicoService medicoService) {
 @PostMapping("/cadastrar")
 @Transactional
 public ResponseEntity<MedicoResponse> cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO) {
-    Medico medico = medicoService.conversaoDTO(medicoDTO);
+    Medico medico = medicoService.cadastrarMedico(medicoDTO);
 
     MedicoResponse medicoResponse = new MedicoResponse(medico);
 
@@ -46,8 +46,11 @@ public ResponseEntity<MedicoResponse> buscarMedicoPorId(@PathVariable Long id) {
 }
 
 @PutMapping("/atualizar/{id}")
-public Medico atualizarMedico(@PathVariable Long id, @RequestBody Medico medico) {
-    return medicoService.atualizarMedico(id, medico);
+public ResponseEntity<MedicoResponse>atualizarMedico(@PathVariable Long id, @RequestBody MedicoDTO medico) {
+    Medico medicoatt = medicoService.atualizarMedico(id, medico);
+    MedicoResponse medicoResponse = new MedicoResponse(medicoatt);
+
+    return ResponseEntity.ok(medicoResponse);
 }
 
 
