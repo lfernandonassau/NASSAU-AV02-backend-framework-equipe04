@@ -1,14 +1,8 @@
 package com.example.ProjetoBackEnd.services.Impl;
 
 import com.example.ProjetoBackEnd.dto.AgendamentoDTO;
-import com.example.ProjetoBackEnd.model.Agendamento;
-import com.example.ProjetoBackEnd.model.Medico;
-import com.example.ProjetoBackEnd.model.Paciente;
-import com.example.ProjetoBackEnd.model.Usuario;
-import com.example.ProjetoBackEnd.repository.AgendamentoRepository;
-import com.example.ProjetoBackEnd.repository.MedicoRepository;
-import com.example.ProjetoBackEnd.repository.PacienteRepository;
-import com.example.ProjetoBackEnd.repository.UsuarioRepository;
+import com.example.ProjetoBackEnd.model.*;
+import com.example.ProjetoBackEnd.repository.*;
 import com.example.ProjetoBackEnd.services.AgendamentoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +21,8 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     private PacienteRepository pacienteRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private SalaRepository salaRepository;
 
     @Override
     public Agendamento salvar(Agendamento agendamento) {
@@ -62,22 +58,32 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return agendamentoRepository.findByStatusAgendamento(status);
     }
 
-
     @Override
-    public Agendamento atualizar(int id, Agendamento agendamentoNovosDados) {
-
+    public Agendamento atualizar(int id, AgendamentoDTO agendamentoNovosDados) {
 
         Agendamento agendamentoExistente = agendamentoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado com ID: " + id));
+        Medico medico = medicoRepository.findByNome(agendamentoNovosDados.getNomeMedico());
+        if (medico == null) {
+            throw new RuntimeException("Medico: " + agendamentoNovosDados.getNomeMedico() + " não encontrado.");
+        }
 
+        Paciente paciente = pacienteRepository.findByNome(agendamentoNovosDados.getNomePaciente());
+        if (paciente == null) {
+            throw new RuntimeException("Paciente: " + agendamentoNovosDados.getNomePaciente() + " não encontrado.");
+        }
+
+        Usuario usuario = usuarioRepository.findByNome(agendamentoNovosDados.getNomeUsuario());
 
         agendamentoExistente.setStatusAgendamento(agendamentoNovosDados.getStatusAgendamento());
-        agendamentoExistente.setMedico(agendamentoNovosDados.getMedico());
-        agendamentoExistente.setPaciente(agendamentoNovosDados.getPaciente());
-        agendamentoExistente.setUsuario(agendamentoNovosDados.getUsuario());
+
+
+        agendamentoExistente.setMedico(medico);
+        agendamentoExistente.setPaciente(paciente);
+        agendamentoExistente.setUsuario(usuario);
+
         agendamentoExistente.setDataInicio(agendamentoNovosDados.getDataInicio());
         agendamentoExistente.setDataFim(agendamentoNovosDados.getDataFim());
-
 
         return agendamentoRepository.save(agendamentoExistente);
     }
@@ -110,6 +116,12 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         }
         String nomeUsuario = agendamentoDTO.getNomeUsuario();
         Usuario usuario = usuarioRepository.findByNome(nomeUsuario);
+        String nomeSala = agendamentoDTO.getNomeSala();
+
+        Sala sala = salaRepository.findByNome(nomeSala);
+        if (sala == null) {
+            throw new RuntimeException("Sala: " + nomeSala + " não encontrada.");
+        }
 
         Agendamento agendamento = new Agendamento();
 
@@ -120,6 +132,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento.setMedico(medico);
         agendamento.setPaciente(paciente);
         agendamento.setUsuario(usuario);
+        agendamento.setSala( sala );
 
         return agendamentoRepository.save(agendamento);
 

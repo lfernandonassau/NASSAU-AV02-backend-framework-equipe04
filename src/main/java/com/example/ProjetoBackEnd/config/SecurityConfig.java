@@ -61,9 +61,16 @@
                             .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                             .requestMatchers(HttpMethod.POST, "/usuarios/forgot-password").permitAll()
                             .requestMatchers(HttpMethod.POST, "/usuarios/reset-password").permitAll()
+
+                            .requestMatchers(HttpMethod.POST,"/agendamento/cadastrarAgendamento").authenticated()
+                            .requestMatchers(HttpMethod.GET,"/agendamento/todosagendamentos").authenticated()
+                            .requestMatchers(HttpMethod.PUT,"/agendamento/atualizaragendamento").authenticated()
+                            .requestMatchers(HttpMethod.DELETE,"/agendamento/deletaragendamento/{id}").authenticated()
+                            .requestMatchers(HttpMethod.GET,"/agendamento/filtrarstatus").authenticated()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.PATCH, "/admin/desativar/{id}").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.PATCH, "/admin/ativar/{id}").hasRole("ADMIN")
+
 
                             .anyRequest().authenticated()
                     )

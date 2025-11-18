@@ -31,6 +31,9 @@ public class AgendamentoResponse {
         this.nomePaciente = agendamento.getPaciente() != null ? agendamento.getPaciente().getNome() : null;
         this.nomeSala     = agendamento.getSala()     != null ? agendamento.getSala().getNome()     : null;
     }
+
+    public AgendamentoResponse(int id, Agendamento salvo) {
+    }
 }
 
 

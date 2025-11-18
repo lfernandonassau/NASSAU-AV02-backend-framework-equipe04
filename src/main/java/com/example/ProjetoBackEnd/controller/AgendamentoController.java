@@ -8,6 +8,7 @@ import com.example.ProjetoBackEnd.model.Paciente;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.AgendamentoRepository;
 import com.example.ProjetoBackEnd.services.AgendamentoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,44 +38,16 @@ public class AgendamentoController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/buscarpacientes")
-    public List<AgendamentoResponse> buscarPacientes(Paciente paciente) {
-        return agendamentoService.buscarPorPaciente(paciente)
-                .stream()
-                .map(AgendamentoResponse::new)
-                .collect(Collectors.toList());
+
+    @PutMapping("/atualizaragendamento/{id}")
+    public ResponseEntity<AgendamentoResponse> atualizarAgendamento(@PathVariable int id, @RequestBody AgendamentoDTO agendamento) {
+        Agendamento agendamento1 =agendamentoService.atualizar(id, agendamento);
+        AgendamentoResponse agendamentoResponse = new AgendamentoResponse(agendamento1);
+
+        return ResponseEntity.ok(agendamentoResponse);
     }
 
-    @GetMapping("/buscarpormedico")
-    public List<AgendamentoResponse> buscarPorMedico(Medico medico){
-        return agendamentoService.buscarPorMedico(medico)
-                .stream()
-                .map(AgendamentoResponse::new)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/buscarporuser")
-    public List<AgendamentoResponse> buscarPorUser(Usuario usuario){
-        return agendamentoService.buscarPorUser(usuario)
-                .stream()
-                .map(AgendamentoResponse::new)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/filtrarstatus")
-    public List<AgendamentoResponse> filtrarStatus(boolean status){
-        return agendamentoService.buscarPorStatus(status)
-                .stream()
-                .map(AgendamentoResponse::new)
-                .collect(Collectors.toList());
-    }
-
-    @PutMapping("/atualizaragendamento")
-    public Agendamento atualizarAgendamento(@RequestBody int id,Agendamento agendamento) {
-        return agendamentoService.atualizar(id,agendamento);
-    }
-
-    @DeleteMapping("/deletaragendamento")
+    @DeleteMapping("/deletaragendamento/{id}")
     public void deletarAgendamento(@PathVariable Integer id) {
         agendamentoService.remover(id);
     }
