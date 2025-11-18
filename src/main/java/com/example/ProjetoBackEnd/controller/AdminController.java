@@ -17,6 +17,7 @@ public class AdminController {
     private UsuarioService usuarioService;
 
     @PatchMapping("/desativar/{id}")
+
     public ResponseEntity<Void> desativarUser(@PathVariable Long id){
         usuarioService.desativarUser(id);
         return ResponseEntity.noContent().build();
@@ -24,6 +25,7 @@ public class AdminController {
     }
 
     @PatchMapping("ativar/{id}")
+
     public ResponseEntity<Void> ativarUser(@PathVariable Long id){
         usuarioService.ativarUser(id);
         return ResponseEntity.noContent().build();

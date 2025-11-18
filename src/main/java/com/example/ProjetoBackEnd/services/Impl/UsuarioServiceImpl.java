@@ -11,6 +11,10 @@ import com.example.ProjetoBackEnd.services.UsuarioService;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +28,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PacienteRepository pacienteRepository, JwtTokenService jwtTokenService) {
+
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PacienteRepository pacienteRepository, JwtTokenService jwtTokenService, AuthenticationManager authenticationManager) {
         this.usuarioRepository = usuarioRepository;
         this.pacienteRepository = pacienteRepository;
         this.jwtTokenService = jwtTokenService;
+        this. authenticationManager= authenticationManager;
     }
     public void validarUsuario(Usuario usuario){
         if(usuario.getNome() == null || usuario.getNome().trim().isEmpty()){
@@ -83,23 +91,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(loginRequest.getEmail());
-        
-        if (usuarioOptional.isEmpty()) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-        
-        Usuario usuario = usuarioOptional.get();
-        
-        if (!passwordEncoder.matches(loginRequest.getSenha(), usuario.getSenha())) { //equals pra matches, além do encoder
-            throw new RuntimeException("Senha incorreta");
-        }
-        
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
+
         String token = jwtTokenService.generateToken(usuario);
-        
+
+
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
-        
+
         return loginResponse;
     }
 

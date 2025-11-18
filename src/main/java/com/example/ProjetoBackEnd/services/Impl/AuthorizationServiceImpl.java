@@ -4,6 +4,7 @@ import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.repository.UsuarioRepository;
 import com.example.ProjetoBackEnd.services.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,11 +20,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> user = usuarioRepository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("Usuário não encontrado" + "" + username);
 
         }
-        return user.get();
+
+        Usuario usuario = user.get();
+
+        if(!usuario.isEnabled()){
+            throw new DisabledException("Conta do usuário desativada, fale como o administrador");
+        }
+        return usuario;
 
     }
 }
