@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.ProjetoBackEnd.model.Usuario;
 import com.example.ProjetoBackEnd.services.JwtTokenService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,18 +15,24 @@ import java.util.Date;
 @Service
 public class JwtTokenServiceImpl implements JwtTokenService {
 
-    private static final String SECRET_KEY = "minhaChaveSecretaSuperSeguraParaJWTToken123456789";
-    private static final long EXPIRATION_TIME = 86400000; // 24 horas em millisegundos
+
+    @Value("${api.security.token.secret}")
+    private String secretKey;
+
+
+    @Value("${api.security.token.expiration}")
+    private long expirationTime;
 
     private Algorithm getAlgorithm() {
-        return Algorithm.HMAC256(SECRET_KEY);
+
+        return Algorithm.HMAC256(secretKey);
     }
 
     @Override
     public String generateToken(Usuario usuario) {
         try {
             Date now = new Date();
-            Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
+            Date expiryDate = new Date(now.getTime() + expirationTime);
 
             return JWT.create()
                     .withSubject(usuario.getEmail())
