@@ -16,7 +16,7 @@
 
 ##  Como Rodar o Projeto
 
-- **git clone https://github.com/seu-usuario/nome-do-repositorio.git**
+- **git clone https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe04.git**
 - **cd nome-do-repositorio**
 - **mvn spring-boot:run**
 
